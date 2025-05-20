@@ -2,14 +2,14 @@ class User {
   final int? id;
   final String name;
   final int age;
-  final bool hobby; // เพิ่มฟิลด์ gender
+  final String hobby; 
   final String internet;
 
   User({
     this.id,
     required this.name,
     required this.age,
-    required this.hobby, // เพิ่ม gender ใน constructor
+    required this.hobby,
     required this.internet,
   });
 
@@ -18,8 +18,8 @@ class User {
       'id': id,
       'name': name,
       'age': age,
-      'hobby': hobby, // เพิ่ม gender ใน map
-      'internet': internet, // เพิ่ม gender ใน map
+      'hobby': hobby, 
+      'internet': internet, 
     };
   }
 
@@ -28,7 +28,7 @@ class User {
       id: map['id'],
       name: map['name'],
       age: map['age'],
-      hobby: map['hobby'], // อ่าน gender จากฐานข้อมูล
+      hobby: map['hobby'], 
       internet: map['internet'],
     );
   }
