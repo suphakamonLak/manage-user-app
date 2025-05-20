@@ -30,7 +30,7 @@ class Dbhelper {
         id INTEGER PRIMARY KEY AUTOINCREMENT, 
         name TEXT, 
         age INTEGER NOT NULL, 
-        hobby INTEGER,
+        hobby TEXT,
         internet TEXT
         );
     """);
