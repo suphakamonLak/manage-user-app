@@ -11,6 +11,8 @@ class MyUser extends StatefulWidget {
 class _MyUserState extends State<MyUser> {
   late List<Map<String, dynamic>> userdata = [];
   late String txt = "";
+  late String genderSel = "";
+  List<String> genderOptions = ['Male', 'Female', 'LQBTQ'];
 
   @override
   void initState() {
@@ -60,7 +62,6 @@ class _MyUserState extends State<MyUser> {
             ),
           ],
         ),
-        // backgroundColor: const Color.fromARGB(255, 162, 187, 238),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -69,7 +70,6 @@ class _MyUserState extends State<MyUser> {
             width: double.infinity,
             height: 800,
             decoration: BoxDecoration(
-              // color: const Color.fromARGB(255, 255, 255, 255),
               borderRadius: BorderRadius.circular(12)
             ),
             child: ListView.builder(
@@ -78,10 +78,8 @@ class _MyUserState extends State<MyUser> {
               itemCount: userdata.length,
               itemBuilder: (BuildContext context, int index) {
                 return Dismissible(
-                  // เลื่อนรายการทิ้งโดยปัดซ้ายขวา
-                  key: UniqueKey(),
-                  onDismissed: (direction) {
-                    // จะถูกเรียกเมื่อรายการถูกเลื่อนออกจนหมดหน้าจอ
+                  key: UniqueKey(),// เลื่อนรายการทิ้งโดยปัดซ้ายขวา
+                  onDismissed: (direction) {// จะถูกเรียกเมื่อรายการถูกเลื่อนออกจนหมดหน้าจอ
                     setState(() {
                       userdata.removeAt(index);
                     });
@@ -108,26 +106,26 @@ class _MyUserState extends State<MyUser> {
                                   "${userdata[index]["name"]}",
                                   style: TextStyle(fontSize: 16),
                                 ),
-                                subtitle: Text("Age: ${userdata[index]["age"]}\nInternet: ${formatData(userdata[index]["internet"])}\n"
+                                subtitle: Text("Age: ${userdata[index]["age"]} Gender: ${userdata[index]["gender"]}\nInternet: ${formatData(userdata[index]["internet"])}\n"
                                   "Hobby:  ${formatData(userdata[index]["hobby"])}"
                                 ),
                               ),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  IconButton(
-                                        // icon edit
+                                  IconButton(// icon edit
                                         onPressed: () {
                                           String name = userdata[index]["name"];
-                                          String age =
-                                              userdata[index]["age"].toString();
+                                          String age = userdata[index]["age"].toString();
                                           int id = userdata[index]["id"];
                                           String hobby = userdata[index]["hobby"];
                                           String internet = userdata[index]["internet"];
-                                          todoUpdate(name, age, hobby, id, internet);
+                                          String gender = userdata[index]["gender"];
+
+                                          todoUpdate(name, age, hobby, id, internet, gender);
                                         },
                                         icon: const Icon(Icons.edit)),
-                                    IconButton(
+                                    IconButton(// icon delete
                                         onPressed: () {
                                           String name = userdata[index]["name"];
                                           int id = userdata[index]["id"];
@@ -262,6 +260,21 @@ class _MyUserState extends State<MyUser> {
                   SizedBox(
                     height: 10,
                   ),
+                  Text("Gender", style: TextStyle(fontWeight: FontWeight.bold),),
+                  ...genderOptions.map((choice) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Radio(
+                          value: choice, 
+                          groupValue: genderSel, 
+                          onChanged: (value) => setStateDialog(
+                            () => genderSel = value!),
+                        ),
+                        Text(choice)
+                      ],
+                    );
+                  }),
                   Text("Hobby: ", style: TextStyle(fontWeight: FontWeight.bold),),
                   ...hobby.keys.map((choice) {
                     return Row(
@@ -314,10 +327,14 @@ class _MyUserState extends State<MyUser> {
                             name: userName.text,
                             age: int.parse(userAge.text),
                             hobby: selHobby.toString(),
-                            internet: selInternet.toString()); // ใช้ gender ที่เลือก
+                            internet: selInternet.toString(),
+                            gender: genderSel
+                        ); // ใช้ gender ที่เลือก
                         await Dbhelper.instance.insertDog(doginfo);
                         userdata = await Dbhelper.instance.queryAll();
-                        setState(() {});// update UI
+                        setState(() {
+                          genderSel = "";
+                        });// update UI
                         Navigator.pop(context);
                       },
                       child: const Text("Record")
@@ -338,7 +355,7 @@ class _MyUserState extends State<MyUser> {
         });
   }
 
-  void todoUpdate(name, age, hobbySel, id, internetSel) {
+  void todoUpdate(name, age, hobbySel, id, internetSel, genderSel) {
     TextEditingController newUserName = TextEditingController(text: name);
     TextEditingController newUserAge = TextEditingController(text: age);
     Map<String, bool> internet = {
@@ -363,6 +380,7 @@ class _MyUserState extends State<MyUser> {
               content: SingleChildScrollView(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     TextField(
                       controller: newUserName,
@@ -383,7 +401,22 @@ class _MyUserState extends State<MyUser> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text("Hobby:"),
+                    Text("Gender: ", style: TextStyle(fontWeight: FontWeight.bold),),
+                    ...genderOptions.map((choice) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Radio(
+                            value: choice, 
+                            groupValue: genderSel, 
+                            onChanged: (value) => setStateDialog(
+                              () => genderSel = value!),
+                          ),
+                          Text(choice)
+                        ],
+                      );
+                    }),
+                    Text("Hobby:", style: TextStyle(fontWeight: FontWeight.bold),),
                     ...hobby.keys.map((choice) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -400,9 +433,7 @@ class _MyUserState extends State<MyUser> {
                     SizedBox(
                       height: 10,
                     ),
-                    // Row(
-                      // children: [
-                    Text("Internet:"),
+                    Text("Internet:", style: TextStyle(fontWeight: FontWeight.bold),),
                     ...internet.keys.map((choice) {
                       return Row(
                         mainAxisAlignment: MainAxisAlignment.start,
@@ -415,8 +446,6 @@ class _MyUserState extends State<MyUser> {
                         ],
                       );
                     }),
-                      // ],
-                    // ),
                   ],
                 ),
               ),
@@ -438,7 +467,9 @@ class _MyUserState extends State<MyUser> {
                           name: newUserName.text,
                           age: int.parse(newUserAge.text),
                           hobby: selHobby.toString(),
-                          internet: selInternet.toString()); // ใช้ gender ที่เลือก
+                          internet: selInternet.toString(),
+                          gender: genderSel
+                        ); // ใช้ gender ที่เลือก
                       await Dbhelper.instance.update(doginfo);
                       userdata = await Dbhelper.instance.queryAll();
                       setState(() {});
