@@ -31,7 +31,8 @@ class Dbhelper {
         name TEXT, 
         age INTEGER NOT NULL, 
         hobby TEXT,
-        internet TEXT
+        internet TEXT,
+        gender Text
         );
     """);
   }
