@@ -12,7 +12,7 @@ class _MyUserState extends State<MyUser> {
   late List<Map<String, dynamic>> userdata = [];
   late String txt = "";
   late String genderSel = "";
-  List<String> genderOptions = ['Male', 'Female', 'LQBTQ'];
+  List<String> genderOptions = ['Male', 'Female', 'LGBTQ'];
 
   @override
   void initState() {
