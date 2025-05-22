@@ -19,12 +19,12 @@ Manage User is a mobile application for managing user data, built entirely with 
 ---
 
 ## 📸 Screenshots
-<img width="150" src="https://github.com/user-attachments/assets/42db2da3-4ad9-4f23-917a-3b3f904dd584"/>
-<img width="150" src="https://github.com/user-attachments/assets/768cc554-7dde-4921-a5e4-6475ed8d5c9a"/>
-<img width="150" src="https://github.com/user-attachments/assets/015bb8c8-537e-481a-b007-040e9591e3fd"/>
-<img width="150" src="https://github.com/user-attachments/assets/77b69d85-e3ec-47e2-bcf7-fe18027f45e6"/>
+<img width="150" src="https://github.com/user-attachments/assets/1a4df71d-559b-447b-bf8e-7455044d9079"/>
+<img width="150" src="https://github.com/user-attachments/assets/8a0ff6f4-c71f-4a05-87b8-8463c04cba9d"/>
+<img width="150" src="https://github.com/user-attachments/assets/376a22f1-5aa1-468d-8bc7-f2e3966dc027"/>
+<img width="150" src="https://github.com/user-attachments/assets/16d54980-1835-49fa-b7eb-f5524d777aac"/>
 
 ---
 
 ## 📱 Download and Install the App
-https://drive.google.com/file/d/1ulMn68qcUw0nOaryON8gsDk_9cmqyACK/view?usp=drive_link
+https://drive.google.com/file/d/1XtWH6Uj9TlNCn_3gXDxjRAliMsS9-q3L/view?usp=drive_link
